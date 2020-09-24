@@ -7,24 +7,31 @@ public static int wagePerHour=20;
 	public static void main(String[] args) {
 		System.out.println("Welcome to employee wage computation");
 		int fullDayHour;
-		int fullTime=1;
-		int partTime=2;
+		final int fullTime=1;
+		final int partTime=2;
 		
 		int value=(int)((Math.random()*10)%3);
-		if(value==fullTime) {
-			fullDayHour=8;	
+		
+		switch (value) {
+		case fullTime: {
+			
+					fullDayHour=8;
+					break;
+		}
+		case partTime: {
+					
+					fullDayHour=4;
+					break;
+		}
+		
+		default: {
+					
+					fullDayHour=0;
+					break;
+				}
 		}
 
-		else { if(value==partTime) {
-				fullDayHour=4;
-				}
-			
-				else {
-					fullDayHour=0;
-					
-				}
-		
-		}
+
 		
 		int wage=wagePerHour*fullDayHour;
 		System.out.println("wage of the employee is"+wage);
