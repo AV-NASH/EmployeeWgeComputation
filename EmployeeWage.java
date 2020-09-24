@@ -1,8 +1,9 @@
 package employeeWagePackage;
 
 public class EmployeeWage {
-public static int wagePerHour=20;
-public static int noofWorkingDays=20;
+public static final int wagePerHour=20;
+public static final int noofWorkingDays=20;
+public static final int noOfMaxHours=100;
 
 
 	public static void main(String[] args) {
@@ -11,8 +12,10 @@ public static int noofWorkingDays=20;
 		final int fullTime=1;
 		final int partTime=2;
 		int EmpWage=0;
+		int noofdays=0;
+		int noofhours=0;
 		
-		for (int i = 0; i < noofWorkingDays; i++) {
+		while (noofdays<noofWorkingDays && noofhours<noOfMaxHours) {
 			
 		
 			int value=(int)((Math.random()*10)%3);
@@ -33,7 +36,9 @@ public static int noofWorkingDays=20;
 						break;
 					}
 			}
-	
+			
+			noofhours=noofhours+fullDayHour;
+			noofdays=noofdays+1;
 			int wage=wagePerHour*fullDayHour;
 			 EmpWage=EmpWage+wage;
 		}
