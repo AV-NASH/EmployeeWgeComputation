@@ -2,12 +2,13 @@ package employeeWagePackage;
 
 import java.util.Scanner;
 
-public class EmployeeWage {
-	private  CompanyWage[] companyarray = new CompanyWage[5];
-	private int noofcompanies=0;
+public class EmployeeWage implements ICalculateWage {
+	private CompanyWage[] companyarray = new CompanyWage[5];
+	private int noofcompanies = 0;
+
 	public static void main(String[] args) {
 		System.out.println("Welcome to employee wage computation\n");
-		EmployeeWage employeewage=new EmployeeWage();
+		ICalculateWage employeewage = new EmployeeWage();
 		employeewage.CompanyInfo();
 
 	}
@@ -15,34 +16,34 @@ public class EmployeeWage {
 	public void CompanyInfo() {
 
 		Scanner scanner = new Scanner(System.in);
-		int choice=0;
+		int choice = 0;
 		do {
-		System.out.println("plase add company details(max 5 companies)");
-		System.out.println("Enter your Company name");
-		String companyName = scanner.nextLine();
-		System.out.println("Enter wage per hour");
-		int wagePerHour = scanner.nextInt();
-		System.out.println("enter no of working days per month");
-		int noofWorkingDays = scanner.nextInt();
-		System.out.println("Enter the no of max hours per month");
-		int noofMaxHours = scanner.nextInt();
-		System.out.println("do ypu want to add more?\n"+"1. yes\n"+"2. no\n"+"Enter your choice");
-		choice=scanner.nextInt();
-		addCompany(companyName, wagePerHour, noofWorkingDays, noofMaxHours);
-		scanner.nextLine();
-		noofcompanies++;
-		}while(choice==1&&noofcompanies<5);
-		if(noofcompanies==5)System.out.println("max number of companies reached");
+			System.out.println("plase add company details(max 5 companies)");
+			System.out.println("Enter your Company name");
+			String companyName = scanner.nextLine();
+			System.out.println("Enter wage per hour");
+			int wagePerHour = scanner.nextInt();
+			System.out.println("enter no of working days per month");
+			int noofWorkingDays = scanner.nextInt();
+			System.out.println("Enter the no of max hours per month");
+			int noofMaxHours = scanner.nextInt();
+			System.out.println("do ypu want to add more?\n" + "1. yes\n" + "2. no\n" + "Enter your choice");
+			choice = scanner.nextInt();
+			addCompany(companyName, wagePerHour, noofWorkingDays, noofMaxHours);
+			scanner.nextLine();
+			noofcompanies++;
+		} while (choice == 1 && noofcompanies < 5);
+		if (noofcompanies == 5)
+			System.out.println("max number of companies reached");
 		showWage();
 		scanner.close();
 	}
-	
+
 	public void addCompany(String companyName, int wagePerHour, int noofWorkingDays, int noofMaxHours) {
-		
-		companyarray[noofcompanies]=new CompanyWage(wagePerHour, noofWorkingDays, noofMaxHours, companyName);
+
+		companyarray[noofcompanies] = new CompanyWage(wagePerHour, noofWorkingDays, noofMaxHours, companyName);
 		calcSalary(companyarray[noofcompanies]);
 	}
-	
 
 	public void calcSalary(CompanyWage calcwage) {
 
@@ -82,9 +83,9 @@ public class EmployeeWage {
 
 		calcwage.setTotalWage(EmpWage);
 	}
-	
+
 	public void showWage() {
-		for(int index=0;index<noofcompanies;index++) {
+		for (int index = 0; index < noofcompanies; index++) {
 			System.out.println(companyarray[index]);
 		}
 	}
@@ -98,8 +99,6 @@ class CompanyWage {
 	private int noofMaxHours;
 	private String companyName;
 	private int totalWage;
-
-	
 
 	public CompanyWage(int wagePerHour, int noofWorkingDays, int noofMaxHours, String companyName) {
 		super();
@@ -140,7 +139,7 @@ class CompanyWage {
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
 	}
-	
+
 	public int getTotalWage() {
 		return totalWage;
 	}
@@ -154,4 +153,13 @@ class CompanyWage {
 		return "Total wage of " + companyName + " is " + totalWage;
 	}
 
+}
+
+interface ICalculateWage{
+	 public void CompanyInfo();
+	 public void addCompany(String companyName, int wagePerHour, int noofWorkingDays, int noofMaxHours);
+	 public void calcSalary(CompanyWage calcwage);
+	 public void showWage() ;
+	 
+	
 }
