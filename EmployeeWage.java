@@ -5,7 +5,6 @@ import java.util.Scanner;
 
 public class EmployeeWage implements ICalculateWage {
 	private ArrayList<CompanyWage> companyarraylist = new ArrayList<CompanyWage>();
-	private int noofcompanies = 0;
 
 	public static void main(String[] args) {
 		System.out.println("Welcome to employee wage computation\n");
@@ -18,6 +17,7 @@ public class EmployeeWage implements ICalculateWage {
 
 		Scanner scanner = new Scanner(System.in);
 		int choice = 0;
+		String companyname;
 		do {
 			System.out.println("plase add company details");
 			System.out.println("Enter your Company name");
@@ -28,15 +28,32 @@ public class EmployeeWage implements ICalculateWage {
 			int noofWorkingDays = scanner.nextInt();
 			System.out.println("Enter the no of max hours per month");
 			int noofMaxHours = scanner.nextInt();
-			System.out.println("do ypu want to add more?\n" + "1. yes\n" + "2. no\n" + "Enter your choice");
+			System.out.println("do you want to add more?\n" + "1. yes\n" + "2. no\n" + "Enter your choice\n");
 			choice = scanner.nextInt();
 			addCompany(companyName, wagePerHour, noofWorkingDays, noofMaxHours);
 			scanner.nextLine();
-			noofcompanies++;
-		} while (choice == 1 && noofcompanies < 5);
-		if (noofcompanies == 5)
-			System.out.println("max number of companies reached");
-		showWage();
+		} while (choice == 1);
+
+		do {
+			System.out.println("\nPlease choose your next action\n" + "1. view total wage by company name\n"
+					+ "2. view all companies total wage\n" + "3. Exit\n" + "Enter your choice\n");
+			choice = scanner.nextInt();
+			scanner.nextLine();
+			switch (choice) {
+			case 1: {
+				System.out.println("Enter the company name");
+				companyname = scanner.nextLine();
+				viewWageByCompanyName(companyname);
+				break;
+			}
+			case 2: {
+				showWage();
+				break;
+			}
+			default:
+				System.out.println("thank you for using application");
+			}
+		} while (choice != 3);
 		scanner.close();
 	}
 
@@ -45,7 +62,7 @@ public class EmployeeWage implements ICalculateWage {
 		CompanyWage companywage = new CompanyWage(wagePerHour, noofWorkingDays, noofMaxHours, companyName);
 		calcSalary(companywage);
 		companyarraylist.add(companywage);
-		
+
 	}
 
 	public void calcSalary(CompanyWage calcwage) {
@@ -54,11 +71,11 @@ public class EmployeeWage implements ICalculateWage {
 		final int fullTime = 1;
 		final int partTime = 2;
 		int EmpWage = 0;
-		float EmpDaiyWage=0;
+		float EmpDaiyWage = 0;
 		int noofdays = 0;
 		int noofhours = 0;
 		int value;
-		int noofdaysworked=0;
+		int noofdaysworked = 0;
 
 		while (noofdays < calcwage.getNoofWorkingDays() && noofhours < calcwage.getNoofMaxHours()) {
 			noofdaysworked++;
@@ -85,15 +102,23 @@ public class EmployeeWage implements ICalculateWage {
 			int wage = calcwage.getWagePerHour() * fullDayHour;
 			EmpWage = EmpWage + wage;
 		}
-		
-		EmpDaiyWage=(float)EmpWage/noofdaysworked;
+
+		EmpDaiyWage = (float) EmpWage / noofdaysworked;
 		calcwage.setTotalWage(EmpWage);
 		calcwage.setDailyWage(EmpDaiyWage);
 	}
 
 	public void showWage() {
-		for (CompanyWage compwage:companyarraylist) {
+		for (CompanyWage compwage : companyarraylist) {
 			System.out.println(compwage);
+		}
+	}
+
+	public void viewWageByCompanyName(String companyname) {
+		for (CompanyWage comparename : companyarraylist) {
+			if (comparename.getCompanyName().equals(companyname)) {
+				System.out.println(comparename);
+			}
 		}
 	}
 
@@ -147,7 +172,7 @@ class CompanyWage {
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
 	}
-	
+
 	public float getDailyWage() {
 		return dailyWage;
 	}
@@ -155,7 +180,6 @@ class CompanyWage {
 	public void setDailyWage(float dailyWage) {
 		this.dailyWage = dailyWage;
 	}
-
 
 	public int getTotalWage() {
 		return totalWage;
@@ -172,11 +196,13 @@ class CompanyWage {
 
 }
 
-interface ICalculateWage{
-	 public void CompanyInfo();
-	 public void addCompany(String companyName, int wagePerHour, int noofWorkingDays, int noofMaxHours);
-	 public void calcSalary(CompanyWage calcwage);
-	 public void showWage() ;
-	 
-	
+interface ICalculateWage {
+	public void CompanyInfo();
+
+	public void addCompany(String companyName, int wagePerHour, int noofWorkingDays, int noofMaxHours);
+
+	public void calcSalary(CompanyWage calcwage);
+
+	public void showWage();
+
 }
