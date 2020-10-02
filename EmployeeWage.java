@@ -54,12 +54,14 @@ public class EmployeeWage implements ICalculateWage {
 		final int fullTime = 1;
 		final int partTime = 2;
 		int EmpWage = 0;
+		float EmpDaiyWage=0;
 		int noofdays = 0;
 		int noofhours = 0;
 		int value;
+		int noofdaysworked=0;
 
 		while (noofdays < calcwage.getNoofWorkingDays() && noofhours < calcwage.getNoofMaxHours()) {
-
+			noofdaysworked++;
 			value = (int) ((Math.random() * 10) % 3);
 
 			switch (value) {
@@ -83,8 +85,10 @@ public class EmployeeWage implements ICalculateWage {
 			int wage = calcwage.getWagePerHour() * fullDayHour;
 			EmpWage = EmpWage + wage;
 		}
-
+		
+		EmpDaiyWage=(float)EmpWage/noofdaysworked;
 		calcwage.setTotalWage(EmpWage);
+		calcwage.setDailyWage(EmpDaiyWage);
 	}
 
 	public void showWage() {
@@ -101,6 +105,7 @@ class CompanyWage {
 	private int noofWorkingDays;
 	private int noofMaxHours;
 	private String companyName;
+	private float dailyWage;
 	private int totalWage;
 
 	public CompanyWage(int wagePerHour, int noofWorkingDays, int noofMaxHours, String companyName) {
@@ -142,6 +147,15 @@ class CompanyWage {
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
 	}
+	
+	public float getDailyWage() {
+		return dailyWage;
+	}
+
+	public void setDailyWage(float dailyWage) {
+		this.dailyWage = dailyWage;
+	}
+
 
 	public int getTotalWage() {
 		return totalWage;
